@@ -1,2 +1,2 @@
 # bataille_navale
-Test Ripple motion
+ Implémentation d'une bataille navale avec placement aléatoire des navires.
