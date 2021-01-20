@@ -4,6 +4,7 @@ class Ship:
         self.size = size
         self.x_position = x_position
         self.y_position = y_position
+        self.orientation = None
 
 
 class Cruiser(Ship):
