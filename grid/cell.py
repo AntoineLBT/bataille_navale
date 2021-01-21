@@ -4,3 +4,4 @@ class Cell:
         self.y_position = y_position
         self.ship_type = None
         self.is_touched = False
+        self.is_empty = True

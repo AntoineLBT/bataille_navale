@@ -1,27 +1,39 @@
 class Ship:
-    def __init__(self, size: int, x_position: int, y_position: int):
+    def __init__(self, size: int, x_position: int, y_position: int, orientation: str):
 
         self.size = size
         self.x_position = x_position
         self.y_position = y_position
-        self.orientation = None
+        self.orientation = orientation
 
 
 class Cruiser(Ship):
-    def __init__(self, x_position: int, y_position: int):
-        super().__init__(4, x_position, y_position)
+
+    SIZE = 4
+
+    def __init__(self, x_position: int, y_position: int, orientation: str):
+        super().__init__(Cruiser.SIZE, x_position, y_position, orientation)
 
 
 class Escort(Ship):
-    def __init__(self, x_position: int, y_position: int):
-        super().__init__(3, x_position, y_position)
+
+    SIZE = 3
+
+    def __init__(self, x_position: int, y_position: int, orientation: str):
+        super().__init__(Escort.SIZE, x_position, y_position, orientation)
 
 
 class Torpedo(Ship):
-    def __init__(self, x_position: int, y_position: int):
-        super().__init__(2, x_position, y_position)
+
+    SIZE = 2
+
+    def __init__(self, x_position: int, y_position: int, orientation: str):
+        super().__init__(Torpedo.SIZE, x_position, y_position, orientation)
 
 
 class SubMarine(Ship):
-    def __init__(self, x_position: int, y_position: int):
-        super().__init__(1, x_position, y_position)
+
+    SIZE = 1
+
+    def __init__(self, x_position: int, y_position: int, orientation: bool):
+        super().__init__(SubMarine.SIZE, x_position, y_position, orientation)
