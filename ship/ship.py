@@ -35,5 +35,5 @@ class SubMarine(Ship):
 
     SIZE = 1
 
-    def __init__(self, x_position: int, y_position: int, orientation: bool):
+    def __init__(self, x_position: int, y_position: int, orientation: str):
         super().__init__(SubMarine.SIZE, x_position, y_position, orientation)
