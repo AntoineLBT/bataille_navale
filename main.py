@@ -1,7 +1,7 @@
-from grid.grid import Grid
+from controller.grid import Grid
 
 if __name__ == "__main__":
-    grid = Grid(10, 5)
+    grid = Grid(20, 20)
     grid.create_empty_grid()
     grid.fill_grid()
     print(grid)
