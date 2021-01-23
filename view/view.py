@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+from controller.grid import Grid
+from controller.cell import Cell
 
 
 class View:
@@ -35,12 +37,14 @@ class View:
             padx=5, pady=5
         )
 
-        self.size = None
+        self.chosen_size = None
 
         self.grid_frame = tk.Frame(
             self.root, bg="skyblue", width=View.GRID_WIDTH, height=View.GRID_HEIGHT
         )
         self.grid_frame.pack(fill=tk.BOTH, expand=1)
+
+        self.grid_object = Grid(0, 0)
 
     def action(self, event):
         size = self.list_combo.get()
@@ -49,8 +53,8 @@ class View:
             return None
         size_list = size.split("x")
 
-        self.size = (int(size_list[0]), int(size_list[1]))
-        print(self.size)
+        self.chosen_size = (int(size_list[0]), int(size_list[1]))
+        print(self.chosen_size)
 
     def popup(self):
         pop_up = tk.Toplevel()
@@ -65,7 +69,7 @@ class View:
         self.root.wait_window(pop_up)
 
     def generate_grid(self):
-        if self.size is None:
+        if self.chosen_size is None:
             self.popup()
             return None
 
@@ -83,24 +87,46 @@ class View:
         x_start_grid = int(x_start_grid)
         y_start_grid = int(y_start_grid)
 
-        for x in range(
-            x_start_grid, (self.size[0] * View.CELL_SIZE) + x_start_grid, View.CELL_SIZE
-        ):
-            for y in range(
-                y_start_grid,
-                (self.size[1] * View.CELL_SIZE) + y_start_grid,
+        self.initialize_grid_object()
+
+        for x, x_in_px in enumerate(
+            range(
+                x_start_grid,
+                (self.chosen_size[0] * View.CELL_SIZE) + x_start_grid,
                 View.CELL_SIZE,
+            )
+        ):
+            for y, y_in_px in enumerate(
+                range(
+                    y_start_grid,
+                    (self.chosen_size[1] * View.CELL_SIZE) + y_start_grid,
+                    View.CELL_SIZE,
+                )
             ):
-                canvas.create_rectangle(x, y, x + View.CELL_SIZE, y + View.CELL_SIZE)
-                print(x, y)
+
+                cell = self.grid_object.grid[y][x]
+                canvas.create_rectangle(
+                    x_in_px,
+                    y_in_px,
+                    x_in_px + View.CELL_SIZE,
+                    y_in_px + View.CELL_SIZE,
+                    fill=cell.color,
+                )
+                print(x_in_px, y_in_px)
         canvas.pack(fill=tk.BOTH, padx=5, pady=5)
 
     def calculate_grid_position(self):
 
-        grid_width = self.size[0] * View.CELL_SIZE
+        grid_width = self.chosen_size[0] * View.CELL_SIZE
         x_start_grid = (View.GRID_WIDTH - grid_width) / 2
 
-        grid_height = self.size[1] * View.CELL_SIZE
+        grid_height = self.chosen_size[1] * View.CELL_SIZE
         y_start_grid = (View.GRID_HEIGHT - grid_height) / 2
 
         return x_start_grid, y_start_grid
+
+    def initialize_grid_object(self):
+
+        self.grid_object = Grid(self.chosen_size[0], self.chosen_size[1])
+        self.grid_object.create_empty_grid()
+        self.grid_object.fill_grid()

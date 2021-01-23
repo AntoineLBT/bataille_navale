@@ -70,6 +70,7 @@ class Grid:
         ):
             self.grid[cell[0]][cell[1]].is_empty = False
             self.grid[cell[0]][cell[1]].ship_type = ship_class
+            self.grid[cell[0]][cell[1]].color = ship_class.COLOR
 
     def check_perimeter_is_available(
         self, orientation, ship_size, x_pos_start, y_pos_start
