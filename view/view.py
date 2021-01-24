@@ -8,7 +8,7 @@ from controller.cell import Cell
 class View:
 
     SIZE_CHOICE = ["", "15x15", "20x20", "25x25", "30x30"]
-    GRID_WIDTH = 600
+    GRID_WIDTH = 800
     GRID_HEIGHT = 700
     CELL_SIZE = 20
 
@@ -84,7 +84,7 @@ class View:
 
         x_start_grid, y_start_grid = self.calculate_grid_position()
         x_start_grid = int(x_start_grid)
-        y_start_grid = int(y_start_grid)
+        y_start_grid = int(y_start_grid) - 30
 
         self.initialize_grid_object()
 
@@ -111,7 +111,7 @@ class View:
                     y_in_px + View.CELL_SIZE,
                     fill=cell.color,
                 )
-        canvas.pack(fill=tk.BOTH, padx=5, pady=5)
+        canvas.pack(fill=tk.BOTH, pady=0)
 
     def calculate_grid_position(self):
 
