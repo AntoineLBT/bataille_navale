@@ -39,7 +39,6 @@ class Grid:
                 orientation, ship_class.SIZE, x_pos, y_pos
             ):
                 orientation, x_pos, y_pos = self.create_a_ship(ship_class)
-                print(orientation, x_pos, y_pos)
 
             self.allocate_perimeter(ship_class, x_pos, y_pos, orientation)
 
@@ -68,7 +67,21 @@ class Grid:
         for cell in self.select_perimeter(
             orientation, ship_class.SIZE, x_pos_start, y_pos_start
         ):
+
             self.grid[cell[0]][cell[1]].is_empty = False
+
+        if orientation == "vertical":
+            positions_ships = [
+                (y, x_pos_start)
+                for y in range(y_pos_start, y_pos_start + ship_class.SIZE, 1)
+            ]
+        else:
+            positions_ships = [
+                (y_pos_start, x)
+                for x in range(x_pos_start, x_pos_start + ship_class.SIZE, 1)
+            ]
+
+        for cell in positions_ships:
             self.grid[cell[0]][cell[1]].ship_type = ship_class
             self.grid[cell[0]][cell[1]].color = ship_class.COLOR
 
@@ -102,10 +115,13 @@ class Grid:
                 cells_to_check.append((y_pos_start, x))
                 cells_to_check.append((y_pos_start + 1, x))
 
-        for cell in cells_to_check:
-            if cell[0] < 0 or cell[0] >= self.height:
-                cells_to_check.pop(cells_to_check.index(cell))
-            elif cell[1] < 0 or cell[1] >= self.width:
-                cells_to_check.pop(cells_to_check.index(cell))
+        cells_to_return = self.filter_invalid_cells(cells_to_check)
 
-        return cells_to_check
+        return cells_to_return
+
+    def filter_invalid_cells(self, cells_to_check):
+        cells_to_return = []
+        for cell in cells_to_check:
+            if 0 <= cell[0] < self.height and 0 <= cell[1] < self.width:
+                cells_to_return.append(cell)
+        return cells_to_return

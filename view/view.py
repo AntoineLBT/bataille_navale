@@ -54,7 +54,6 @@ class View:
         size_list = size.split("x")
 
         self.chosen_size = (int(size_list[0]), int(size_list[1]))
-        print(self.chosen_size)
 
     def popup(self):
         pop_up = tk.Toplevel()
@@ -112,7 +111,6 @@ class View:
                     y_in_px + View.CELL_SIZE,
                     fill=cell.color,
                 )
-                print(x_in_px, y_in_px)
         canvas.pack(fill=tk.BOTH, padx=5, pady=5)
 
     def calculate_grid_position(self):
