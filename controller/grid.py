@@ -31,7 +31,7 @@ class Grid:
     ) -> list:
         # Determine horizontal or vertical orientation
         ships = []
-        for i in range(number_of_ship):
+        for _ in range(number_of_ship):
 
             orientation, x_pos, y_pos = self.create_a_ship(ship_class)
 
@@ -41,7 +41,7 @@ class Grid:
                 orientation, x_pos, y_pos = self.create_a_ship(ship_class)
 
             self.allocate_perimeter(ship_class, x_pos, y_pos, orientation)
-
+            self.define_ship_cells(ship_class, x_pos, y_pos, orientation)
             ships.append(ship_class(x_pos, y_pos, orientation))
         return ships
 
@@ -70,6 +70,24 @@ class Grid:
 
             self.grid[cell[0]][cell[1]].is_empty = False
 
+    def define_ship_cells(
+        self,
+        ship_class: [Cruiser, Escort, Torpedo, SubMarine],
+        x_pos_start: int,
+        y_pos_start: int,
+        orientation: str,
+    ):
+
+        ship_cells = self.select_ship_cells(
+            orientation, ship_class, x_pos_start, y_pos_start
+        )
+
+        for cell in ship_cells:
+            self.grid[cell[0]][cell[1]].ship_type = ship_class
+            self.grid[cell[0]][cell[1]].color = ship_class.COLOR
+
+    @staticmethod
+    def select_ship_cells(orientation, ship_class, x_pos_start, y_pos_start):
         if orientation == "vertical":
             positions_ships = [
                 (y, x_pos_start)
@@ -80,10 +98,7 @@ class Grid:
                 (y_pos_start, x)
                 for x in range(x_pos_start, x_pos_start + ship_class.SIZE, 1)
             ]
-
-        for cell in positions_ships:
-            self.grid[cell[0]][cell[1]].ship_type = ship_class
-            self.grid[cell[0]][cell[1]].color = ship_class.COLOR
+        return positions_ships
 
     def check_perimeter_is_available(
         self, orientation, ship_size, x_pos_start, y_pos_start
