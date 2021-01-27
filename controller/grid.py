@@ -33,19 +33,19 @@ class Grid:
         ships = []
         for _ in range(number_of_ship):
 
-            orientation, x_pos, y_pos = self.create_a_ship(ship_class)
+            orientation, x_pos, y_pos = self.generate_ship_data(ship_class)
 
             while not self.check_perimeter_is_available(
                 orientation, ship_class.SIZE, x_pos, y_pos
             ):
-                orientation, x_pos, y_pos = self.create_a_ship(ship_class)
+                orientation, x_pos, y_pos = self.generate_ship_data(ship_class)
 
             self.allocate_perimeter(ship_class, x_pos, y_pos, orientation)
             self.define_ship_cells(ship_class, x_pos, y_pos, orientation)
             ships.append(ship_class(x_pos, y_pos, orientation))
         return ships
 
-    def create_a_ship(self, ship_class):
+    def generate_ship_data(self, ship_class):
         orientation = randrange(2)
         if orientation:
             orientation = "vertical"
@@ -103,7 +103,7 @@ class Grid:
     def check_perimeter_is_available(
         self, orientation, ship_size, x_pos_start, y_pos_start
     ):
-        cells_available = True
+        is_cells_available = True
         cells_to_check = self.select_perimeter(
             orientation, ship_size, x_pos_start, y_pos_start
         )  # list of tuple : (y,x)
@@ -111,9 +111,9 @@ class Grid:
         for cell_to_check in cells_to_check:
 
             if not self.grid[cell_to_check[0]][cell_to_check[1]].is_empty:
-                cells_available = False
+                is_cells_available = False
                 break
-        return cells_available
+        return is_cells_available
 
     def select_perimeter(self, orientation, ship_size, x_pos_start, y_pos_start):
 
