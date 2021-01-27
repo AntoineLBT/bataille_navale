@@ -4,6 +4,12 @@ from random import randrange
 
 
 class Grid:
+
+    CRUISER_NUMBER = 1
+    ESCORT_NUMBER = 2
+    TORPEDO_NUMBER = 3
+    SUBMARINE_NUMBER = 4
+
     def __init__(self, width, height):
         self.height = height
         self.width = width
@@ -21,10 +27,10 @@ class Grid:
             self.grid.append(row)
 
     def fill_grid(self):
-        self.cruisers = self.create_ships(Cruiser, 1)
-        self.escorts = self.create_ships(Escort, 2)
-        self.torpedos = self.create_ships(Torpedo, 3)
-        self.submarines = self.create_ships(SubMarine, 4)
+        self.cruisers = self.create_ships(Cruiser, Grid.CRUISER_NUMBER)
+        self.escorts = self.create_ships(Escort, Grid.ESCORT_NUMBER)
+        self.torpedos = self.create_ships(Torpedo, Grid.TORPEDO_NUMBER)
+        self.submarines = self.create_ships(SubMarine, Grid.SUBMARINE_NUMBER)
 
     def create_ships(
         self, ship_class: [Cruiser, Escort, Torpedo, SubMarine], number_of_ship: int
