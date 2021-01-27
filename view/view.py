@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 from controller.grid import Grid
+from config.config import PYTHON_MODULE_ROOT_PATH
 
 
 class View:
@@ -41,7 +42,7 @@ class View:
 
     def load_image(self):
         load = Image.open(
-            "/home/antoine/PycharmProjects/bataille_navale/view/reshape_bg.jpg"
+            PYTHON_MODULE_ROOT_PATH / "view" / "reshape_bg.jpg"
         )
         render = ImageTk.PhotoImage(load)
         img = tk.Label(self.button_frame, image=render)
