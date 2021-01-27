@@ -26,9 +26,9 @@ class View:
         self.list_combo.current(0)
         self.list_combo.pack(padx=5, pady=5)
         self.list_combo.bind("<<ComboboxSelected>>", self.generate_action_button)
-        tk.Button(self.button_frame, text="Generate", command=self.generate_visual_grid).pack(
-            padx=5, pady=5
-        )
+        tk.Button(
+            self.button_frame, text="Generate", command=self.generate_visual_grid
+        ).pack(padx=5, pady=5)
 
         self.chosen_size = None
 
@@ -95,18 +95,18 @@ class View:
 
     def create_visual_grid(self, canvas, x_start_grid, y_start_grid):
         for x, x_in_px in enumerate(
-                range(
-                    x_start_grid,
-                    (self.chosen_size[0] * View.CELL_SIZE) + x_start_grid,
-                    View.CELL_SIZE,
-                )
+            range(
+                x_start_grid,
+                (self.chosen_size[0] * View.CELL_SIZE) + x_start_grid,
+                View.CELL_SIZE,
+            )
         ):
             for y, y_in_px in enumerate(
-                    range(
-                        y_start_grid,
-                        (self.chosen_size[1] * View.CELL_SIZE) + y_start_grid,
-                        View.CELL_SIZE,
-                    )
+                range(
+                    y_start_grid,
+                    (self.chosen_size[1] * View.CELL_SIZE) + y_start_grid,
+                    View.CELL_SIZE,
+                )
             ):
                 cell = self.grid_object.grid[y][x]
                 canvas.create_rectangle(
@@ -136,3 +136,12 @@ class View:
         self.grid_object = Grid(self.chosen_size[0], self.chosen_size[1])
         self.grid_object.create_empty_grid()
         self.grid_object.fill_grid()
+
+
+def main():
+    view = View()
+    view.root.mainloop()
+
+
+if __name__ == "__main__":
+    main()
